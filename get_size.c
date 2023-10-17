@@ -1,7 +1,8 @@
 #include "main.h"
 
 /**
- * calculate_argument_size - Determine the required size for casting the argument.
+ * get_size - Determine the required size
+ * for casting the argument.
  * @format: The format string for printing the arguments.
  * @i: Index of the argument in the list.
  *

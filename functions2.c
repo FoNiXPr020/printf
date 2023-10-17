@@ -8,7 +8,7 @@
  * @width: Width specifier.
  * @precision: Precision specification.
  * @size: Size specifier.
- * 
+ *
  * Return: Number of characters printed.
  */
 int print_pointer(va_list types, char buffer[],
@@ -53,7 +53,8 @@ int print_pointer(va_list types, char buffer[],
 }
 
 /**
- * print_non_printable - Print ASCII codes in hexadecimal of non-printable characters.
+ * print_non_printable - Print ASCII codes in hexadecimal of
+ * non-printable characters.
  * @types: List of arguments.
  * @buffer: Buffer array for printing.
  * @flags: Active formatting flags.

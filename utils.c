@@ -15,7 +15,7 @@ int is_printable(char c)
 }
 
 /**
- * append_hexadecimal_code - Appends ASCII in hexadecimal 
+ * append_hexa_code - Appends ASCII in hexadecimal
  * representation to a buffer.
  * @buffer: Array of characters.
  * @i: Index at which to start appending.
@@ -70,7 +70,7 @@ long int convert_size_number(long int num, int size)
 }
 
 /**
- * convert_size_unsigned - Convert a number to the specified data type.
+ * convert_size_unsgnd - Convert a number to the specified data type.
  * @num: The number to be converted.
  * @size: An integer indicating the target data type for the conversion.
  *

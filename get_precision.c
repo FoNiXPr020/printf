@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * calculate_precision - Determine the precision for formatting a string.
+ * get_precision - Determine the precision for formatting a string.
  * @format: The format string for the argument list.
  * @i: The index of the current argument.
  * @list: A list of arguments.
