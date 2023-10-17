@@ -1,14 +1,14 @@
 #include "main.h"
 
 /**
- * get_size - Determine the required size
+ * g_size - Determine the required size
  * for casting the argument.
  * @format: The format string for printing the arguments.
  * @i: Index of the argument in the list.
  *
  * Return: The calculated size for casting the argument.
  */
-int get_size(const char *format, int *i)
+int g_size(const char *format, int *i)
 {
 	int iCurr = *i + 1;
 	int iSize = 0;

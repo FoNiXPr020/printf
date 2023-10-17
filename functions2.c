@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_pointer - Print the value of a pointer variable.
+ * p_pointer - Print the value of a pointer variable.
  * @types: List of arguments.
  * @buffer: Buffer array for printing.
  * @flags: Active formatting flags.
@@ -11,10 +11,10 @@
  *
  * Return: Number of characters printed.
  */
-int print_pointer(va_list types, char buffer[],
+int p_pointer(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	char extra_c = 0, padd = ' ';
+	char iExtra = 0, padd = ' ';
 	int ind = BUFF_SIZE - 2, length = 2, padd_start = 1; /* length=2, for '0x' */
 	unsigned long num_addrs;
 	char map_to[] = "0123456789abcdef";
@@ -41,19 +41,19 @@ int print_pointer(va_list types, char buffer[],
 	if ((flags & F_ZERO) && !(flags & F_MINUS))
 		padd = '0';
 	if (flags & F_PLUS)
-		extra_c = '+', length++;
+		iExtra = '+', length++;
 	else if (flags & F_SPACE)
-		extra_c = ' ', length++;
+		iExtra = ' ', length++;
 
 	ind++;
 
 	/*return (write(1, &buffer[i], BUFF_SIZE - i - 1));*/
-	return (write_pointer(buffer, ind, length,
-		width, flags, padd, extra_c, padd_start));
+	return (write_pointers(buffer, ind, length,
+		width, flags, padd, iExtra, padd_start));
 }
 
 /**
- * print_non_printable - Print ASCII codes in hexadecimal of
+ * p_non_printable - Print ASCII codes in hexadecimal of
  * non-printable characters.
  * @types: List of arguments.
  * @buffer: Buffer array for printing.
@@ -64,37 +64,37 @@ int print_pointer(va_list types, char buffer[],
  *
  * Return: Number of characters printed.
  */
-int print_non_printable(va_list types, char buffer[],
+int p_non_printable(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	int i = 0, offset = 0;
-	char *pas = va_arg(types, char *);
+	int i = 0, iOffset = 0;
+	char *str = va_arg(types, char *);
 
 	UNUSED(flags);
 	UNUSED(width);
 	UNUSED(precision);
 	UNUSED(size);
 
-	if (pas == NULL)
+	if (str == NULL)
 		return (write(1, "(null)", 6));
 
-	while (pas[i] != '\0')
+	while (str[i] != '\0')
 	{
-		if (is_printable(pas[i]))
-			buffer[i + offset] = pas[i];
+		if (i_printable(str[i]))
+			buffer[i + iOffset] = str[i];
 		else
-			offset += append_hexa_code(pas[i], buffer, i + offset);
+			iOffset += hexa_code(str[i], buffer, i + iOffset);
 
 		i++;
 	}
 
-	buffer[i + offset] = '\0';
+	buffer[i + iOffset] = '\0';
 
-	return (write(1, buffer, i + offset));
+	return (write(1, buffer, i + iOffset));
 }
 
 /**
- * print_reverse - Print a reversed string.
+ * p_reverse - Print a reversed string.
  * @types: List of arguments.
  * @buffer: Buffer array for printing.
  * @flags: Active formatting flags.
@@ -104,39 +104,40 @@ int print_non_printable(va_list types, char buffer[],
  *
  * Return: Number of characters printed.
  */
-int print_reverse(va_list types, char buffer[],
+int p_reverse(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	char *pas;
-	int i, count = 0;
+	char *str;
+	int i, iCount = 0;
 
 	UNUSED(buffer);
 	UNUSED(flags);
 	UNUSED(width);
 	UNUSED(size);
 
-	pas = va_arg(types, char *);
+	str = va_arg(types, char *);
 
-	if (pas == NULL)
+	if (str == NULL)
 	{
 		UNUSED(precision);
 
-		pas = ")Null(";
+		str = ")Null(";
 	}
-	for (i = 0; pas[i]; i++)
+	for (i = 0; str[i]; i++)
 		;
 
 	for (i = i - 1; i >= 0; i--)
 	{
-		char z = pas[i];
+		char z = str[i];
 
 		write(1, &z, 1);
-		count++;
+		iCount++;
 	}
-	return (count);
+	return (iCount);
 }
+
 /**
- * print_rot13string - Print a string in ROT13 encoding.
+ * p_rot13string - Print a string in ROT13 encoding.
  * @types: List of arguments.
  * @buffer: Buffer array for printing.
  * @flags: Active formatting flags.
@@ -146,43 +147,43 @@ int print_reverse(va_list types, char buffer[],
  *
  * Return: Number of characters printed.
  */
-int print_rot13string(va_list types, char buffer[],
+int p_rot13string(va_list types, char buffer[],
 	int flags, int width, int precision, int size)
 {
 	char x;
-	char *pas;
+	char *str;
 	unsigned int i, j;
-	int count = 0;
+	int iCount = 0;
 	char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
-	pas = va_arg(types, char *);
+	str = va_arg(types, char *);
 	UNUSED(buffer);
 	UNUSED(flags);
 	UNUSED(width);
 	UNUSED(precision);
 	UNUSED(size);
 
-	if (pas == NULL)
-		pas = "(AHYY)";
-	for (i = 0; pas[i]; i++)
+	if (str == NULL)
+		str = "(AHYY)";
+	for (i = 0; str[i]; i++)
 	{
 		for (j = 0; in[j]; j++)
 		{
-			if (in[j] == pas[i])
+			if (in[j] == str[i])
 			{
 				x = out[j];
 				write(1, &x, 1);
-				count++;
+				iCount++;
 				break;
 			}
 		}
 		if (!in[j])
 		{
-			x = pas[i];
+			x = str[i];
 			write(1, &x, 1);
-			count++;
+			iCount++;
 		}
 	}
-	return (count);
+	return (iCount);
 }

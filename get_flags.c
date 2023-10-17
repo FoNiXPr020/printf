@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * get_flags - Extracts active flags from a formatted string.
+ * g_flags - Extracts active flags from a formatted string.
  * @format: The formatted string containing the flags.
  * @i: The current position in the string.
  * Return: The extracted flags.
  */
-int get_flags(const char *format, int *i)
+int g_flags(const char *format, int *i)
 {
 	int j, iCurr;
 	int iFlags = 0;

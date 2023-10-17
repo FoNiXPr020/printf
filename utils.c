@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * is_printable - Determine if a character is printable.
+ * i_printable - Determine if a character is printable.
  * @c: The character to evaluate.
  *
  * Return: 1 if 'c' is printable, 0 otherwise.
  */
-int is_printable(char c)
+int i_printable(char c)
 {
 	if (c >= 32 && c < 127)
 		return (1);
@@ -15,14 +15,14 @@ int is_printable(char c)
 }
 
 /**
- * append_hexa_code - Appends ASCII in hexadecimal
+ * hexa_code - Appends ASCII in hexadecimal
  * representation to a buffer.
  * @buffer: Array of characters.
  * @i: Index at which to start appending.
  * @ascii_code: ASCII code.
  * Return: Always 3 (the number of characters appended).
  */
-int append_hexa_code(char ascii_code, char buffer[], int i)
+int hexa_code(char ascii_code, char buffer[], int i)
 {
 	char to_map[] = "0123456789ABCDEF";
 	/* The hexa format code is always 2 digits long */
@@ -39,12 +39,12 @@ int append_hexa_code(char ascii_code, char buffer[], int i)
 }
 
 /**
- * is_digit - Determine if a character is a digit.
+ * i_digit - Determine if a character is a digit.
  * @c: The character to evaluate.
  *
  * Return: 1 if 'c' is a digit, 0 otherwise.
  */
-int is_digit(char c)
+int i_digit(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);

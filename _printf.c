@@ -31,12 +31,12 @@ int _printf(const char *format, ...)
 		else
 		{
 			print_buffer(buffer, &buff_ind);
-			flags = get_flags(format, &i);
-			width = get_width(format, &i, list);
-			precision = get_precision(format, &i, list);
-			size = get_size(format, &i);
+			flags = g_flags(format, &i);
+			width = g_width(format, &i, list);
+			precision = g_precision(format, &i, list);
+			size = g_size(format, &i);
 			++i;
-			iPrinted = handle_print(format, &i, list, buffer,
+			iPrinted = print_with_format(format, &i, list, buffer,
 				flags, width, precision, size);
 			if (iPrinted == -1)
 				return (-1);

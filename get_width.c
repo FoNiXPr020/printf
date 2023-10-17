@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * get_width - Determine the required
+ * g_width - Determine the required
  * width for formatting and printing.
  * @format: The format string for printing the arguments.
  * @i: Index of the argument in the list.
@@ -9,14 +9,14 @@
  *
  * Return: The calculated printing width.
  */
-int get_width(const char *format, int *i, va_list list)
+int g_width(const char *format, int *i, va_list list)
 {
 	int iCurr;
 	int iWidth = 0;
 
 	for (iCurr = *i + 1; format[iCurr] != '\0'; iCurr++)
 	{
-		if (is_digit(format[iCurr]))
+		if (i_digit(format[iCurr]))
 		{
 			iWidth *= 10;
 			iWidth += format[iCurr] - '0';

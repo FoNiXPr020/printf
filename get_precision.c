@@ -1,14 +1,14 @@
 #include "main.h"
 
 /**
- * get_precision - Determine the precision for formatting a string.
+ * g_precision - Determine the precision for formatting a string.
  * @format: The format string for the argument list.
  * @i: The index of the current argument.
  * @list: A list of arguments.
  *
  * Return: The calculated precision value.
  */
-int get_precision(const char *format, int *i, va_list list)
+int g_precision(const char *format, int *i, va_list list)
 {
 	int iCurr = *i + 1;
 	int iPrecision = -1;
@@ -20,7 +20,7 @@ int get_precision(const char *format, int *i, va_list list)
 
 	for (iCurr += 1; format[iCurr] != '\0'; iCurr++)
 	{
-		if (is_digit(format[iCurr]))
+		if (i_digit(format[iCurr]))
 		{
 			iPrecision *= 10;
 			iPrecision += format[iCurr] - '0';
