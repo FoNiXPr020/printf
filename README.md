@@ -6,7 +6,6 @@
 - [Description](#description)
 - [Features](#features)
 - [Usage](#usage)
-- [Examples](#examples)
 - [Authors](#authors)
 
 ## Description

@@ -1,6 +1,24 @@
 #include "main.h"
 
 void print_buffer(char buffer[], int *buff_ind);
+int print_unknown_format(char buffer[], int *buff_ind);
+int buffer_append(char buffer[], int *buff_ind, const char *str);
+
+/**
+ * print_unknown_format - Print the message for an unknown format.
+ * @buffer: An array of characters.
+ * @buff_ind: The index at which the next character should be added,
+ *            representing the length.
+ * Return: The number of characters printed for the unknown format.
+ */
+int print_unknown_format(char buffer[], int *buff_ind)
+{
+	int len = 0;
+
+	len += buffer_append(buffer, buff_ind, "%r");
+
+	return (len);
+}
 
 /**
  * _printf - Custom printf function.
@@ -36,8 +54,15 @@ int _printf(const char *format, ...)
 			precision = g_precision(format, &i, list);
 			size = g_size(format, &i);
 			++i;
-			iPrinted = print_with_format(format, &i, list, buffer,
-				flags, width, precision, size);
+			if (format[i] == 'r')
+			{
+				iPrinted = print_unknown_format(buffer, &buff_ind);
+			}
+			else
+			{
+				iPrinted = print_with_format(format, &i, list, buffer,
+					flags, width, precision, size);
+			}
 			if (iPrinted == -1)
 				return (-1);
 			iPrinted_chars += iPrinted;
@@ -63,4 +88,31 @@ void print_buffer(char buffer[], int *buff_ind)
 		write(1, &buffer[0], *buff_ind);
 
 	*buff_ind = 0;
+}
+
+/**
+ * buffer_append - Appends a string to the buffer.
+ * @buffer: An array of characters.
+ * @buff_ind: The index at which the next character should be added,
+ * representing the length.
+ * @str: The string to append to the buffer.
+ * Return: The number of characters appended.
+ */
+int buffer_append(char buffer[], int *buff_ind, const char *str)
+{
+	int len = 0;
+	int i = 0;
+
+	if (buffer == NULL || buff_ind == NULL || str == NULL)
+		return (-1);
+
+	while (str[i] != '\0')
+	{
+		buffer[*buff_ind] = str[i];
+		(*buff_ind)++;
+		len++;
+		i++;
+	}
+
+	return (len);
 }
