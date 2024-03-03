@@ -1,27 +1,31 @@
 #include "main.h"
+
 /**
- * print_with_format - Print an argument based on its type and format.
- * @fmt: The formatted string in which to print the arguments.
+ * print_argument - Prints an argument based on its type.
+ * @fmt: Formatted string in which to print the arguments.
  * @list: List of arguments to be printed.
- * @ind: An index.
- * @buffer: An array for handling printing.
- * @flags: Flags indicating special formatting.
- * @width: The width for formatting.
- * @precision: The precision specification.
- * @size: The size specifier.
- *
- * Return: 1 if successful, 2 if there was an issue.
+ * @ind: Ind.
+ * @buffer: Buffer array to handle print.
+ * @flags: Active flags.
+ * @width: Width.
+ * @precision: Precision specification.
+ * @size: Size specifier.
+ * Return: 1 or 2.
  */
-int print_with_format(const char *fmt, int *ind, va_list list, char buffer[],
+
+int print_argument(const char *fmt, int *ind, va_list list, char buffer[],
 	int flags, int width, int precision, int size)
 {
-	int i, Unknowlen = 0, iPrintedChars = -1;
+	int i, iLen = 0, iPr_char = -1;
 	fmt_t fmt_types[] = {
-		{'c', p_char}, {'s', p_string}, {'%', p_percent},
-		{'i', p_int}, {'d', p_int}, {'b', p_binary},
-		{'u', p_unsigned}, {'o', p_octal}, {'x', p_hexadecimal},
-		{'X', p_hexa_upper}, {'p', p_pointer}, {'S', p_non_printable},
-		{'r', p_reverse}, {'R', p_rot13string}, {'\0', NULL}
+		{'c', print_char}, {'s', print_string}, {'%', print_percent},
+		{'i', print_int}, {'d', print_int}, {'b', print_binary},
+		{'u', print_unsigned_number},
+		{'o', print_octal_number},
+		{'x', print_hexadecimal_number},
+		{'X', print_uppercase_hexadecimal},
+		{'p', print_pointer_value}, {'S', print_non_printable_chars},
+		{'r', print_reverse_string}, {'R', print_rot13_string}, {'\0', NULL}
 	};
 	for (i = 0; fmt_types[i].fmt != '\0'; i++)
 		if (fmt[*ind] == fmt_types[i].fmt)
@@ -31,9 +35,9 @@ int print_with_format(const char *fmt, int *ind, va_list list, char buffer[],
 	{
 		if (fmt[*ind] == '\0')
 			return (-1);
-		Unknowlen += write(1, "%%", 1);
+		iLen += write(1, "%%", 1);
 		if (fmt[*ind - 1] == ' ')
-			Unknowlen += write(1, " ", 1);
+			iLen += write(1, " ", 1);
 		else if (width)
 		{
 			--(*ind);
@@ -43,8 +47,9 @@ int print_with_format(const char *fmt, int *ind, va_list list, char buffer[],
 				--(*ind);
 			return (1);
 		}
-		Unknowlen += write(1, &fmt[*ind], 1);
-		return (Unknowlen);
+		iLen += write(1, &fmt[*ind], 1);
+		return (iLen);
 	}
-	return (iPrintedChars);
+	return (iPr_char);
 }
+

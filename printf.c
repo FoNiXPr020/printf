@@ -1,8 +1,8 @@
 #include "main.h"
 
-void print_buffer(char buffer[], int *buff_ind);
+void print_buffer_contents(char buffer[], int *buff_ind);
 int print_unknown_format(char buffer[], int *buff_ind);
-int buffer_append(char buffer[], int *buff_ind, const char *str);
+int append_string_to_buffer(char buffer[], int *buff_ind, const char *str);
 
 /**
  * print_unknown_format - Print the message for an unknown format.
@@ -15,7 +15,7 @@ int print_unknown_format(char buffer[], int *buff_ind)
 {
 	int len = 0;
 
-	len += buffer_append(buffer, buff_ind, "%r");
+	len += append_string_to_buffer(buffer, buff_ind, "%r");
 
 	return (len);
 }
@@ -43,16 +43,16 @@ int _printf(const char *format, ...)
 		{
 			buffer[buff_ind++] = format[i];
 			if (buff_ind == BUFF_SIZE)
-				print_buffer(buffer, &buff_ind);
+				print_buffer_contents(buffer, &buff_ind);
 			iPrinted_chars++;
 		}
 		else
 		{
-			print_buffer(buffer, &buff_ind);
-			flags = g_flags(format, &i);
-			width = g_width(format, &i, list);
-			precision = g_precision(format, &i, list);
-			size = g_size(format, &i);
+			print_buffer_contents(buffer, &buff_ind);
+			flags = calculate_flags(format, &i);
+			width = calculate_width(format, &i, list);
+			precision = calculate_precision(format, &i, list);
+			size = calculate_size(format, &i);
 			++i;
 			if (format[i] == 'r')
 			{
@@ -60,7 +60,7 @@ int _printf(const char *format, ...)
 			}
 			else
 			{
-				iPrinted = print_with_format(format, &i, list, buffer,
+				iPrinted = print_argument(format, &i, list, buffer,
 					flags, width, precision, size);
 			}
 			if (iPrinted == -1)
@@ -69,7 +69,7 @@ int _printf(const char *format, ...)
 		}
 	}
 
-	print_buffer(buffer, &buff_ind);
+	print_buffer_contents(buffer, &buff_ind);
 
 	va_end(list);
 
@@ -77,12 +77,14 @@ int _printf(const char *format, ...)
 }
 
 /**
- * print_buffer - Print the contents of the buffer if it exists.
+ * print_buffer_contents - Prints the contents
+ * of the buffer if it exists.
  * @buffer: An array of characters.
- * @buff_ind: The index at which the next character should be added,
- * representing the length.
+ * @buff_ind: The index at which the next character
+ * should be added, representing the length.
  */
-void print_buffer(char buffer[], int *buff_ind)
+
+void print_buffer_contents(char buffer[], int *buff_ind)
 {
 	if (*buff_ind > 0)
 		write(1, &buffer[0], *buff_ind);
@@ -91,14 +93,14 @@ void print_buffer(char buffer[], int *buff_ind)
 }
 
 /**
- * buffer_append - Appends a string to the buffer.
+ * append_string_to_buffer - Appends a string to the buffer.
  * @buffer: An array of characters.
- * @buff_ind: The index at which the next character should be added,
- * representing the length.
+ * @buff_ind: The index at which the next character
+ * should be added, representing the length.
  * @str: The string to append to the buffer.
  * Return: The number of characters appended.
  */
-int buffer_append(char buffer[], int *buff_ind, const char *str)
+int append_string_to_buffer(char buffer[], int *buff_ind, const char *str)
 {
 	int len = 0;
 	int i = 0;
@@ -116,3 +118,4 @@ int buffer_append(char buffer[], int *buff_ind, const char *str)
 
 	return (len);
 }
+

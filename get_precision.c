@@ -1,41 +1,42 @@
 #include "main.h"
 
 /**
- * g_precision - Determine the precision for formatting a string.
- * @format: The format string for the argument list.
- * @i: The index of the current argument.
- * @list: A list of arguments.
+ * calculate_precision - Calculates the precision for printing.
+ * @format: Formatted string in which to print the arguments.
+ * @i: List of arguments to be printed.
+ * @list: List of arguments.
  *
- * Return: The calculated precision value.
+ * Return: Precision.
  */
-int g_precision(const char *format, int *i, va_list list)
+int calculate_precision(const char *format, int *i, va_list list)
 {
-	int iCurr = *i + 1;
-	int iPrecision = -1;
+	int iPrec = -1;
+	int iCurrent = *i + 1;
 
-	if (format[iCurr] != '.')
-		return (iPrecision);
+	if (format[iCurrent] != '.')
+		return (iPrec);
 
-	iPrecision = 0;
+	iPrec = 0;
 
-	for (iCurr += 1; format[iCurr] != '\0'; iCurr++)
+	for (iCurrent += 1; format[iCurrent] != '\0'; iCurrent++)
 	{
-		if (i_digit(format[iCurr]))
+		if (is_character_digit(format[iCurrent]))
 		{
-			iPrecision *= 10;
-			iPrecision += format[iCurr] - '0';
+			iPrec *= 10;
+			iPrec += format[iCurrent] - '0';
 		}
-		else if (format[iCurr] == '*')
+		else if (format[iCurrent] == '*')
 		{
-			iCurr++;
-			iPrecision = va_arg(list, int);
+			iCurrent++;
+			iPrec = va_arg(list, int);
 			break;
 		}
 		else
 			break;
 	}
 
-	*i = iCurr - 1;
+	*i = iCurrent - 1;
 
-	return (iPrecision);
+	return (iPrec);
 }
+

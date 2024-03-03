@@ -1,27 +1,27 @@
 #include "main.h"
 
 /**
- * g_size - Determine the required size
- * for casting the argument.
- * @format: The format string for printing the arguments.
- * @i: Index of the argument in the list.
+ * calculate_size - Calculates the size to cast the argument.
+ * @format: Formatted string in which to print the arguments.
+ * @i: List of arguments to be printed.
  *
- * Return: The calculated size for casting the argument.
+ * Return: Size to cast the argument.
  */
-int g_size(const char *format, int *i)
+int calculate_size(const char *format, int *i)
 {
-	int iCurr = *i + 1;
+	int iCurrent = *i + 1;
 	int iSize = 0;
 
-	if (format[iCurr] == 'l')
+	if (format[iCurrent] == 'l')
 		iSize = S_LONG;
-	else if (format[iCurr] == 'h')
+	else if (format[iCurrent] == 'h')
 		iSize = S_SHORT;
 
 	if (iSize == 0)
-		*i = iCurr - 1;
+		*i = iCurrent - 1;
 	else
-		*i = iCurr;
+		*i = iCurrent;
 
 	return (iSize);
 }
+

@@ -1,12 +1,11 @@
 #include "main.h"
 
 /**
- * i_printable - Determine if a character is printable.
- * @c: The character to evaluate.
- *
- * Return: 1 if 'c' is printable, 0 otherwise.
+ * is_character_printable - Evaluates if a character is printable.
+ * @c: Character to be evaluated.
+ * Return: 1 if c is printable, 0 otherwise.
  */
-int i_printable(char c)
+int is_character_printable(char c)
 {
 	if (c >= 32 && c < 127)
 		return (1);
@@ -15,36 +14,34 @@ int i_printable(char c)
 }
 
 /**
- * hexa_code - Appends ASCII in hexadecimal
- * representation to a buffer.
+ * append_hexadecimal_code - Appends ASCII in hexadecimal code to buffer.
  * @buffer: Array of characters.
  * @i: Index at which to start appending.
  * @ascii_code: ASCII code.
- * Return: Always 3 (the number of characters appended).
+ * Return: Always 3.
  */
-int hexa_code(char ascii_code, char buffer[], int i)
+int append_hexadecimal_code(char ascii_code, char buffer[], int i)
 {
-	char to_map[] = "0123456789ABCDEF";
-	/* The hexa format code is always 2 digits long */
+	char map_to[] = "0123456789ABCDEF";
+
 	if (ascii_code < 0)
 		ascii_code *= -1;
 
 	buffer[i++] = '\\';
 	buffer[i++] = 'x';
 
-	buffer[i++] = to_map[ascii_code / 16];
-	buffer[i] = to_map[ascii_code % 16];
+	buffer[i++] = map_to[ascii_code / 16];
+	buffer[i] = map_to[ascii_code % 16];
 
 	return (3);
 }
 
 /**
- * i_digit - Determine if a character is a digit.
- * @c: The character to evaluate.
- *
- * Return: 1 if 'c' is a digit, 0 otherwise.
+ * is_character_digit - Verifies if a character is a digit.
+ * @c: Character to be evaluated.
+ * Return: 1 if c is a digit, 0 otherwise.
  */
-int i_digit(char c)
+int is_character_digit(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
@@ -53,13 +50,12 @@ int i_digit(char c)
 }
 
 /**
- * convert_size_number - Convert a number to the specified data type.
- * @num: The number to be converted.
- * @size: An integer indicating the data type for the conversion.
- *
- * Return: The value of 'num' after conversion.
+ * convert_number_to_specified_size - Casts a number to the specified size.
+ * @num: Number to be casted.
+ * @size: Number indicating the type to be casted.
+ * Return: Casted value of num.
  */
-long int convert_size_number(long int num, int size)
+long int convert_number_to_specified_size(long int num, int size)
 {
 	if (size == S_LONG)
 		return (num);
@@ -70,13 +66,12 @@ long int convert_size_number(long int num, int size)
 }
 
 /**
- * convert_size_unsgnd - Convert a number to the specified data type.
- * @num: The number to be converted.
- * @size: An integer indicating the target data type for the conversion.
- *
- * Return: The value of 'num' after conversion.
+ * convert_specified_unsigned_size - Casts a number to the specified size.
+ * @num: Number to be casted.
+ * @size: Number indicating the type to be casted.
+ * Return: Casted value of num.
  */
-long int convert_size_unsgnd(unsigned long int num, int size)
+long int convert_specified_unsigned_size(unsigned long int num, int size)
 {
 	if (size == S_LONG)
 		return (num);
@@ -85,3 +80,4 @@ long int convert_size_unsgnd(unsigned long int num, int size)
 
 	return ((unsigned int)num);
 }
+
